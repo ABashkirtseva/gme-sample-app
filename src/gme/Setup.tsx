@@ -1,6 +1,7 @@
 import React, { FormEvent} from "react";
 import {Web3Provider} from "@ethersproject/providers";
-import buildClient from "./client";
+// @ts-ignore
+import detectGamestopProvider from '@gamestopnft/detect-gamestop-provider';
 
 const Setup = () => {
   // eslint-disable-next-line no-unused-vars
@@ -13,11 +14,18 @@ const Setup = () => {
     event.preventDefault();
 
     try {
-      buildClient().then((p: any) => {
+      // console.log('+++++METAMASK+++++++');
+      // const provider = new Web3Provider((window as any).ethereum as any);
+      // console.log(provider);
+      // provider.send('eth_accounts', []).then((res: any) => {
+      //     console.log(res);
+      //     console.log('metamask: eth_accounts_request');
+      // });
+      detectGamestopProvider().then((p: any) => {
         console.log('provider is detected');
         const web3Provider = new Web3Provider(p as any);
         web3Provider.send('eth_accounts', []).then((res: any) => {
-          console.log('eth_accounts');
+          console.log('gamestop: eth_accounts');
           console.log(res);
         });
       });
