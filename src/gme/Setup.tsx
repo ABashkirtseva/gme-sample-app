@@ -2,6 +2,7 @@ import React, { FormEvent} from "react";
 import {Web3Provider} from "@ethersproject/providers";
 // @ts-ignore
 import detectGamestopProvider from '@gamestopnft/detect-gamestop-provider';
+import { Link, ProviderPreference } from '@imtbl/imx-sdk';
 
 const Setup = () => {
   // eslint-disable-next-line no-unused-vars
@@ -9,6 +10,16 @@ const Setup = () => {
       // eslint-disable-next-line no-promise-executor-return
        setTimeout(resolve, milliseconds)
     );
+
+  const handleSubmitLink = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const link = new Link('https://link.x.immutable.com', {});
+    return link.setup({
+      // providerPreference: ProviderPreference.NONE,
+      providerPreference: ProviderPreference.GAMESTOP,
+    });
+  }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -35,9 +46,16 @@ const Setup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-        <button type="submit">Connect</button>
-    </form>
+      <>
+        <form onSubmit={handleSubmit}>
+            <button type="submit">Connect</button>
+        </form>
+
+
+        <form onSubmit={handleSubmitLink}>
+          <button type="submit">Connect Link</button>
+        </form>
+      </>
   );
 };
 
